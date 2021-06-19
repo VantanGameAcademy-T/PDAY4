@@ -55,7 +55,7 @@ public class TouchManager : MonoBehaviour
     }
 
     // タッチ終了時のイベント
-    public static event System.Action<TouchInfo> ended
+    public static event System.Action<TouchInfo> Ended
     {
         add
         {
