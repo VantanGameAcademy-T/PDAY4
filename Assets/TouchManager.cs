@@ -23,13 +23,13 @@ public class TouchManager : MonoBehaviour
         }
     }
 
-    private TouchManager _info = new TouchManager();
-    private event System.Action<TouchManager> _began;
-    private event System.Action<TouchManager> _moved;
-    private event System.Action<TouchManager> _ended;
+    private TouchInfo _info = new TouchInfo();
+    private event System.Action<TouchInfo> _began;
+    private event System.Action<TouchInfo> _moved;
+    private event System.Action<TouchInfo> _ended;
 
     // タッチ開始時のイベント
-    public static event System.Action<TouchManager> Began
+    public static event System.Action<TouchInfo> Began
     {
         add
         {
@@ -42,7 +42,7 @@ public class TouchManager : MonoBehaviour
     }
 
     // タッチ中のイベント
-    public static event System.Action<TouchManager> Moved
+    public static event System.Action<TouchInfo> Moved
     {
         add
         {
@@ -55,7 +55,7 @@ public class TouchManager : MonoBehaviour
     }
 
     // タッチ終了時のイベント
-    public static event System.Action<TouchManager> ended
+    public static event System.Action<TouchInfo> ended
     {
         add
         {
@@ -68,7 +68,7 @@ public class TouchManager : MonoBehaviour
     }
 
     // 現在のタッチ状態
-    private TouchState state
+    private TouchState State
     {
         get {
 #if IS_EDITOR
@@ -108,14 +108,45 @@ public class TouchManager : MonoBehaviour
         }
     }
 
-    // タッチ状態
-    private enum TouchState
+    // タッチされてる位置
+    private Vector2 Position
     {
-        None = 0,   // タッチなし
-        Began = 1,  // タッチ開始
-        Moved = 2,  // タッチ中
-        Ended = 3,  // タッチ終了
+        get
+        {
+#if IS_EDITOR
+            return State == TouchState.None ? 
+                Vector2.zero : (Vector2)Input.mousePosition;
+#else
+            return Input.GetTouch(0).position;
+#endif
+        }
+    }
+
+    private void Update()
+    {
+        if (State == TouchState.Began)
+        {
+        }
+        else if (State == TouchState.Moved)
+        {
+        }
+        else if (State == TouchState.Ended)
+        {
+        }
+        else
+        {
+        }
     }
 
 }
+
+// タッチ状態
+public enum TouchState
+{
+    None = 0,   // タッチなし
+    Began = 1,  // タッチ開始
+    Moved = 2,  // タッチ中
+    Ended = 3,  // タッチ終了
+}
+
 
