@@ -126,15 +126,35 @@ public class TouchManager : MonoBehaviour
     {
         if (State == TouchState.Began)
         {
+            _info.screenPoint = Position;
+            _info.deltaScreenPoint = Vector2.zero;
+            if (_began != null)
+            {
+                _began(_info);
+            }
         }
         else if (State == TouchState.Moved)
         {
+            _info.deltaScreenPoint = Position - _info.screenPoint;
+            _info.screenPoint = Position;
+            if (_moved != null)
+            {
+                _moved(_info);
+            }
         }
         else if (State == TouchState.Ended)
         {
+            _info.deltaScreenPoint = Position - _info.screenPoint;
+            _info.screenPoint = Position;
+            if (_ended != null)
+            {
+                _ended(_info);
+            }
         }
         else
         {
+            _info.screenPoint = Vector2.zero;
+            _info.deltaScreenPoint = Vector2.zero;
         }
     }
 
