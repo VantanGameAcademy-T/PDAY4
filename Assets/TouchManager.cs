@@ -140,6 +140,38 @@ public class TouchManager : MonoBehaviour
 
 }
 
+// タッチ情報
+public class TouchInfo
+{
+    // タッチされたスクリーン座標
+    public Vector2 screenPoint;
+    // 1フレーム前のタッチされたスクリーン座標との差分
+    public Vector2 deltaScreenPoint;
+    // タッチされたビューポート座標
+    private Vector2 _viewPoint = Vector2.zero;
+    public Vector2 ViewPoint
+    {
+        get
+        {
+            _viewPoint.x = screenPoint.x / Screen.width;
+            _viewPoint.y = screenPoint.y / Screen.height;
+            return _viewPoint;
+        }
+    }
+    // 1フレーム前のタッチされたビューポート座標との差分
+    private Vector2 _deltaViewPoint = Vector2.zero;
+    public Vector2 DeltaViewPoint
+    {
+        get
+        {
+            _deltaViewPoint.x = deltaScreenPoint.x / Screen.width;
+            _deltaViewPoint.y = deltaScreenPoint.y / Screen.height;
+            return _deltaViewPoint;
+        }
+    }
+}
+
+
 // タッチ状態
 public enum TouchState
 {
